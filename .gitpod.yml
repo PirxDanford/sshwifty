@@ -1,0 +1,6 @@
+image: gitpod/workspace-full
+
+tasks:
+  - name: Install & Build
+    init: npm install
+    command: npm run build
