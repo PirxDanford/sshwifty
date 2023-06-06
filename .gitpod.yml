@@ -4,3 +4,13 @@ tasks:
   - name: Install & Build
     init: npm install
     command: npm run build
+  - name: Create Keys
+    init: openssl req   -newkey rsa:4096 -nodes -keyout domain.key -x509 -days 90 -out domain.crt -subj "/C=DE/ST=Baden-Wuerttemberg/L=Freiburg/O=Personal/OU=Self/CN=example.com"
+    command: SSHWIFTY_DOCKER_TLSCERT="$(cat domain.crt)" && SSHWIFTY_DOCKER_TLSCERTKEY="$(cat domain.key)"
+  - name: Run
+    command: SSHWIFTY_CONFIG=./sshwifty.conf.example.json ./sshwifty
+
+ports:
+  - name: Login-Page
+    port: 8182
+    onOpen: open-preview
